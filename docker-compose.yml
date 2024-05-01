@@ -13,6 +13,9 @@ services:
       - "54320:5432"
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      - gitlab_net
+
   web:
     container_name: web
     build: .
@@ -20,6 +23,9 @@ services:
       - "8000:8080"
     depends_on:
       - postgres
+    networks:
+      - gitlab_net
+
   pgadmin4:
     depends_on:
       - postgres
@@ -33,3 +39,38 @@ services:
       - "8080:80"
     volumes:
       - ./data/pgadmin:/var/lib/pgadmin
+    networks:
+      - gitlab_net
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:8088'
+        nginx['listen_port'] = 8088
+        gitlab_rails['initial_root_password'] = 'portablehole63'
+    ports:
+      - '8088:8088'
+    volumes:
+      - ./data/gitlab/data:/var/opt/gitlab
+      - ./data/gitlab/config:/etc/gitlab
+      - ./data/gitlab/logs:/var/log/gitlab
+    networks:
+      - gitlab_net
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    container_name: gitlab-runner
+    restart: always
+    depends_on:
+      - gitlab
+    volumes:
+      - ./data/gitlab-runner:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitlab_net
+
+networks:
+  gitlab_net:

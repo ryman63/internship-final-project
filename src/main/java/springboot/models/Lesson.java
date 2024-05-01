@@ -5,9 +5,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "lessons")
+@Table(name = "lesson")
 @Data
 public class Lesson {
 
@@ -24,4 +26,7 @@ public class Lesson {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime publicationDateTime;
     private String status;
+
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    private List<Task> Tasks = new ArrayList<>();
 }

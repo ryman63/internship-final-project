@@ -2,10 +2,13 @@ package springboot.services;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import springboot.models.Internship;
 import springboot.models.Participant;
 import springboot.repositories.ParticipantRepository;
+
+import java.util.List;
 
 @Service
 public class ParticipantService {
@@ -38,4 +41,7 @@ public class ParticipantService {
                 participant.getMobileNumber());
     }
 
+    public List<Participant> GetParticipantsByInternshipId(Long internshipId){
+        return repository.getAllByInternship(internshipId);
+    }
 }

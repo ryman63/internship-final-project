@@ -1,10 +1,13 @@
 package springboot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import springboot.mapper.ParticipantGitlabUserMapper;
+import springboot.models.GitlabUser;
 import springboot.models.Internship;
 import springboot.models.Participant;
 import springboot.services.InternshipService;
@@ -16,6 +19,12 @@ import java.time.LocalDate;
 @RequestMapping("/api/participant")
 public class ParticipantController {
 
+    @Value("${gitlab.apiUrl}")
+    private String gitLabApiUrl;
+
+    @Value("${gitlab.token}")
+    private String gitLabToken;
+
     @Autowired
     ParticipantService participantService;
 
@@ -24,9 +33,14 @@ public class ParticipantController {
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/{id}")
-    public Participant getParticipant(@PathVariable Long id) {
+    public ResponseEntity<?> getParticipant(@PathVariable Long id) {
         Participant model = participantService.getParticipantById(id);
-        return model;
+
+        if (model == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Participant not found.");
+        }
+
+        return ResponseEntity.ok(model);
     }
 
 //    @PreAuthorize("hasRole('ADMIN')")
@@ -53,8 +67,36 @@ public class ParticipantController {
             if(participantService.checkExistsParticipant(participant))
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Participant exists.");
 
+
+            // создание пользователя в gitlab
+            HttpHeaders headers = new HttpHeaders();
+            headers.setBearerAuth(gitLabToken);
+            headers.set("Content-Type", "application/json");
+
+            String userUrl = gitLabApiUrl + "/users";
+
+            try{
+                GitlabUser gitlabUser = ParticipantGitlabUserMapper.MAPPER.toGitLabUser(participant);
+                HttpEntity<GitlabUser> requestEntity = new HttpEntity<>(gitlabUser, headers);
+
+                // Создайте RestTemplate
+                RestTemplate restTemplate = new RestTemplate();
+
+                // Отправляем запрос с помощью exchange
+                ResponseEntity<GitlabUser> response = restTemplate.exchange(
+                        userUrl, // URL API
+                        HttpMethod.POST, // Метод запроса
+                        requestEntity, // Тело запроса и заголовки
+                        GitlabUser.class); // Ожидаемый тип ответа
+            }
+            catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create user: " + e.getMessage());
+            }
+
+            // делаем изменения в базе данных
             participantService.signUpParticipantForInternship(internship, participant);
             return ResponseEntity.ok("Participant signed up successfully.");
+
         } else {
             return ResponseEntity.notFound().build();
         }

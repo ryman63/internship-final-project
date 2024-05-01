@@ -12,13 +12,18 @@ java {
 group = 'com.digitalspirit.internship'
 version = '1.0-SNAPSHOT'
 
-
+ext {
+    mapstructVersion = "1.6.0.Beta1"
+    lombokVersion = "1.18.30"
+    lombokMapstructBindingVersion = "0.2.0"
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -28,6 +33,7 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:2.10.5'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}", "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 }
 
 test {

@@ -3,9 +3,11 @@ package springboot.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "task")
 @Data
 public class Task {
 
@@ -21,5 +23,7 @@ public class Task {
     private String gitLabRepositoryId;
     private String status;
     private String grade;
-    private String adminComment;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<TaskComment> adminComment = new ArrayList<>();
 }
