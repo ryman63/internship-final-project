@@ -22,7 +22,6 @@ public class Task {
     private String name;
     private String gitLabRepositoryId;
     private String status;
-    private String grade;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<TaskComment> adminComment = new ArrayList<>();

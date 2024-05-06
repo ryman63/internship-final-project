@@ -5,18 +5,22 @@ import org.springframework.stereotype.Service;
 import springboot.models.Lesson;
 import springboot.repositories.LessonRepository;
 
+import java.util.List;
+
 @Service
 public class LessonService {
     @Autowired
     final LessonRepository repository;
+
     public LessonService(LessonRepository repository) {
         this.repository = repository;
     }
-    public void add(Lesson lesson){
+
+    public void add(Lesson lesson) {
         repository.save(lesson);
     }
 
-    public Lesson getLessonById(Long id){
+    public Lesson getLessonById(Long id) {
         return repository.getById(id);
     }
 }

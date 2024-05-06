@@ -41,7 +41,11 @@ public class ParticipantService {
                 participant.getMobileNumber());
     }
 
-    public List<Participant> GetParticipantsByInternshipId(Long internshipId){
-        return repository.getAllByInternship(internshipId);
+    public List<Participant> GetParticipantsByInternship(Internship internship){
+        return repository.getAllByInternship(internship);
+    }
+
+    public void removeParticipant(Participant participant){
+        repository.delete(participant);
     }
 }

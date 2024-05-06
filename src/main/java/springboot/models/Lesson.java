@@ -1,7 +1,9 @@
 package springboot.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "lesson")
+@ToString(exclude = "Tasks")
 @Data
 public class Lesson {
 

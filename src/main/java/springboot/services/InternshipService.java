@@ -23,5 +23,8 @@ public class InternshipService {
         return repository.getById(id);
     }
 
+    public void removeInternship(Internship internship){
+        repository.delete(internship);
+    }
 
 }

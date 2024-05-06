@@ -3,6 +3,7 @@ package springboot.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import springboot.models.Internship;
 import springboot.models.Participant;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     public boolean existByUsernameEmailTelegramIdMobileNumber(String username, String email, String telegramId, String mobileNumber);
 
     @Query("select participant from Participant participant where participant.internship = ?1")
-    public List<Participant> getAllByInternship(Long internshipId);
+    public List<Participant> getAllByInternship(Internship internship);
 }

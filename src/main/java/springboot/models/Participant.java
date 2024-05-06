@@ -31,4 +31,5 @@ public class Participant {
     private String faculty;
     private String specialty;
     private int course;
+    private String gitlabId;
 }
