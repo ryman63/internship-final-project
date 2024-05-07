@@ -1,5 +1,6 @@
 package springboot.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,8 @@ public class ParticipantController {
     @Autowired
     UserService userService;
 
+    /**Получить участника стажировки - возвращает участника по ID*/
+    @ApiOperation(value = "Получить участника стажировки - возвращает участника по ID")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getParticipant(@PathVariable Long id) {
@@ -53,6 +56,9 @@ public class ParticipantController {
 //        participantService.addParticipant(requestObject);
 //        return "Участник успешно добавлен";
 //    }
+
+    /**Подписаться на участие в стажировке - принимает ID стажировки и объект участника*/
+    @ApiOperation(value = "Подписаться на участие в стажировке - принимает ID стажировки и объект участника")
     @PostMapping("/signup/{internshipId}")
     public ResponseEntity<?> signUpForInternship(@PathVariable Long internshipId, @RequestBody Participant participant) {
         Internship internship = internshipService.getInternshipById(internshipId);

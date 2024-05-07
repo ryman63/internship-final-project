@@ -12,9 +12,5 @@ public class UserController {
         return "Добро пожаловать в ваш профиль!";
     }
 
-    @PostMapping("/internship")
-    public String internshipPost(@RequestBody Participant requestObject) {
-//        internshipService.addInternship(requestObject);
-        return "Продукт успешно добавлен";
-    }
+
 }

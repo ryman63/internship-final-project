@@ -23,7 +23,7 @@ public class UserService {
         return userRepository.getUsersByName(username);
     }
 
-    public void addUser(User user, Authority userAuthority){
+    public void addUser(User user, Authority userAuthority) {
         userRepository.save(user);
         authorityRepository.save(userAuthority);
     }

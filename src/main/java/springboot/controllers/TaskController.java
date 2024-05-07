@@ -1,5 +1,6 @@
 package springboot.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,13 @@ import springboot.services.TaskService;
 public class TaskController {
     @Autowired
     GitlabService gitlabService;
-
     @Autowired
     TaskService taskService;
     @Autowired
     LessonService lessonService;
 
+    /**Создание задания - принимает ID занятия*/
+    @ApiOperation(value = "Создание задания - принимает ID занятия")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{lessonId}")
     @ResponseStatus(HttpStatus.CREATED)

@@ -41,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/public/**").permitAll() // Публичная часть
                 .antMatchers("/api/user/**").hasRole("USER") // Пользовательская часть
                 .antMatchers("/api/admin/**").hasRole("ADMIN"); // Административная часть
-
     }
 
     @Bean

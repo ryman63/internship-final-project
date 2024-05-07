@@ -1,5 +1,8 @@
 package springboot.controllers;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,9 @@ public class AdminController {
     @Autowired
     private GitlabService gitlabService;
 
-    @GetMapping("archive/{internshipId}")
+    /**Переносит стажировку в архив*/
+    @ApiOperation(value = "Переносит стажировку в архив")
+    @GetMapping("/archive/{internshipId}")
     public ResponseEntity<?> archivedInternship(@PathVariable Long internshipId) {
         try {
             Internship internship = internshipService.getInternshipById(internshipId);
@@ -100,5 +105,19 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
         return ResponseEntity.ok("Internship successfully archive");
+    }
+
+    /**Выставляет оценку заданию по ID задания и ID участника*/
+    @ApiOperation(value = "Выставляет оценку заданию по ID задания и ID участника")
+    @PostMapping("/rate/{taskId}/{participantId}")
+    public ResponseEntity<?> rateParticipantTask(@PathVariable Long taskId, @PathVariable Long participantId){
+        try {
+            Task task = taskService.getTaskById(taskId);
+            Participant participant = participantService.getParticipantById(participantId);
+
+        } catch (Exception exception) {
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+        return ResponseEntity.ok("");
     }
 }

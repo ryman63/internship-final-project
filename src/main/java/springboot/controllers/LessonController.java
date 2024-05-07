@@ -1,5 +1,6 @@
 package springboot.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class LessonController {
     @Autowired
     GitlabService gitlabService;
 
-
+    /**Добавляет занятие*/
+    @ApiOperation(value = "Добавляет занятие")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/internship/{internshipId}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,6 +45,8 @@ public class LessonController {
         return "Lesson successfully added";
     }
 
+    /**Публикует занятие по ID*/
+    @ApiOperation(value = "Публикует занятие по ID")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/publication/{id}")
     public ResponseEntity<?> publication(@PathVariable Long id) {
@@ -82,6 +86,8 @@ public class LessonController {
         return ResponseEntity.ok("Lesson successfully publication, created " + counterForks + " forks");
     }
 
+    /**Проверка занятий - выдаёт список свежих коммитов занятия*/
+    @ApiOperation(value = "Проверка занятий - выдаёт список свежих коммитов занятия")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/checkTasks/{lessonId}")
     public ResponseEntity<?> checkTasksLesson(@PathVariable Long lessonId) {

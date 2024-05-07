@@ -21,4 +21,8 @@ public class TaskService {
     public List<Task> getAllByInternship(Internship internship){
         return getAllByInternship(internship);
     }
+
+    public Task getTaskById(Long id) {
+        return repository.getById(id);
+    }
 }
