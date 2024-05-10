@@ -43,48 +43,38 @@ public class PerformanceServiceTest {
 
     @Test
     public void testGetPerformancesByParticipant() {
-        // Arrange
         ParticipantEntity participantEntity = new ParticipantEntity();
         when(performanceRepository.getAllByParticipant(participantEntity)).thenReturn(new ArrayList<>());
 
-        // Act
         List<PerformanceEntity> performances = performanceService.getPerformancesByParticipant(participantEntity);
 
-        // Assert
         assert(performances != null);
         verify(performanceRepository, times(1)).getAllByParticipant(participantEntity);
     }
 
     @Test
     public void testRemovePerformance() {
-        // Arrange
         PerformanceEntity performanceEntity = new PerformanceEntity();
 
-        // Act
         performanceService.removePerformance(performanceEntity);
 
-        // Assert
         verify(performanceRepository, times(1)).delete(performanceEntity);
     }
 
     @Test
     public void testCheckCountPerformance() {
-        // Arrange
         String username = "testuser";
         Long taskId = 1L;
         when(performanceRepository.checkCountPerformanceByTaskIdAndUsername(username, taskId)).thenReturn(true);
 
-        // Act
         boolean result = performanceService.checkCountPerformance(username, taskId);
 
-        // Assert
         assert(result);
         verify(performanceRepository, times(1)).checkCountPerformanceByTaskIdAndUsername(username, taskId);
     }
 
     @Test
     void save_ShouldSavePerformance_WhenValidInput() {
-        // Arrange
         PerformanceDto performanceDto = new PerformanceDto();
         Long taskId = 1L;
         Long participantId = 2L;
@@ -105,10 +95,8 @@ public class PerformanceServiceTest {
         when(participantRepository.getById(participantId)).thenReturn(participantEntity);
         when(performanceRepository.save(any(PerformanceEntity.class))).thenReturn(performanceEntity);
 
-        // Act
         PerformanceEntity savedPerformance = performanceService.save(performanceDto, taskId, participantId);
 
-        // Assert
         assertNotNull(savedPerformance);
         assertEquals(taskEntity, savedPerformance.getTask());
         assertEquals(participantEntity, savedPerformance.getParticipant());

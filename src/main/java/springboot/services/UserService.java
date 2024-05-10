@@ -26,6 +26,8 @@ public class UserService {
     public UserEntity saveUser(UserDto userDto) throws Exception {
         if (userDto == null)
             throw new Exception("user is null");
+        userDto.setPassword("{noop}" + userDto.getPassword());
+
         UserEntity entity = UserDtoUserEntityMapper.MAPPER.toUserEntity(userDto);
         entity.setEnabled(true);
 
@@ -41,6 +43,9 @@ public class UserService {
     public void saveAdmin(UserDto userDto) throws Exception {
         if (userDto == null)
             throw new Exception("user is null");
+
+        userDto.setPassword("{noop}" + userDto.getPassword());
+
         UserEntity entity = UserDtoUserEntityMapper.MAPPER.toUserEntity(userDto);
         entity.setEnabled(true);
 

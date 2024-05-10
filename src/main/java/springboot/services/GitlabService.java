@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import springboot.dto.*;
@@ -25,8 +26,6 @@ public class GitlabService {
     ForkRepository forkRepository;
     ParticipantRepository participantRepository;
 
-    UserService userService;
-
     public GitlabService(ForkRepository forkRepository, ParticipantRepository participantRepository) {
         this.forkRepository = forkRepository;
         this.participantRepository = participantRepository;
@@ -38,8 +37,12 @@ public class GitlabService {
     @Value("${gitlab.token}")
     private String gitLabToken;
 
+    @Value("${gitlab.newUserPassword}")
+    private String gitlabNewUserPassword;
+
     RestTemplate restTemplate = new RestTemplate();
 
+    @Async("threadPoolTaskExecutor")
     public void deleteUserById(String userId) {
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -56,6 +59,7 @@ public class GitlabService {
         }
     }
 
+    @Async("threadPoolTaskExecutor")
     public void deleteProjectById(String projectId) {
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -78,7 +82,7 @@ public class GitlabService {
 
             GitlabUser gitlabUser = ParticipantEntityGitlabUserMapper.MAPPER.toGitLabUser(participant);
 
-            gitlabUser.setPassword("groaworwa22314!");
+            gitlabUser.setPassword(gitlabNewUserPassword);
 
             HttpHeaders headers = new HttpHeaders();
 
@@ -129,9 +133,12 @@ public class GitlabService {
 
             String projectUrl = gitLabApiUrl + "/projects";
 
-            HttpEntity<String> requestEntity = new HttpEntity<>(
-                    "{\"name\": \"" + taskDto.getName() + "\", "
-                            + "\"initialize_with_readme\": \"true\"}", headers);
+            HttpEntity<CreateProjectGitlabDto> requestEntity = new HttpEntity<>(
+                    CreateProjectGitlabDto.builder().
+                            name(taskDto.getName())
+                            .initialize_with_readme(true)
+                            .build(),
+                    headers);
 
             ResponseEntity<String> response = restTemplate.exchange(projectUrl, HttpMethod.POST, requestEntity, String.class);
             if (response.getStatusCode() != HttpStatus.CREATED)
@@ -187,11 +194,19 @@ public class GitlabService {
             headers.setBearerAuth(gitLabToken);
             headers.add("Content-Type", "application/json");
 
+            CreateForkDto.builder()
+                    .name(taskEntity.getName())
+                    .namespace_path(participantUsername)
+                    .path(taskEntity.getName())
+                    .build();
+
             // создаём форк таски
-            HttpEntity<String> requestEntity = new HttpEntity<>(
-                    "{\"name\": \"" + taskEntity.getName() + "\", "
-                            + "\"namespace_path\": \"" + participantUsername + "\", "
-                            + "\"path\": \"" + taskEntity.getName() + "\"}", headers);
+            HttpEntity<CreateForkDto> requestEntity = new HttpEntity<>(
+                    CreateForkDto.builder()
+                    .name(taskEntity.getName())
+                    .namespace_path(participantUsername)
+                    .path(taskEntity.getName())
+                    .build(), headers);
 
             String url = gitLabApiUrl + "/projects/" + taskEntity.getGitLabRepositoryId() + "/fork";
 
@@ -207,6 +222,7 @@ public class GitlabService {
         }
     }
 
+    @Async("threadPoolTaskExecutor")
     public void createCommentForCommit(Long taskId, Long participantId, Comment comment) {
         try {
             ForkEntity forkEntity = forkRepository.getForkByTaskAndParticipant(taskId, participantId);

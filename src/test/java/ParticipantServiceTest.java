@@ -35,15 +35,12 @@ public class ParticipantServiceTest {
 
     @Test
     public void testGetParticipantById() {
-        // Arrange
         Long participantId = 1L;
         ParticipantEntity participantEntity = new ParticipantEntity();
         when(participantRepository.getById(participantId)).thenReturn(participantEntity);
 
-        // Act
         ParticipantEntity retrievedParticipantEntity = participantService.getParticipantById(participantId);
 
-        // Assert
         assert(retrievedParticipantEntity != null);
         assert(retrievedParticipantEntity.equals(participantEntity));
         verify(participantRepository, times(1)).getById(participantId);
@@ -70,29 +67,23 @@ public class ParticipantServiceTest {
 
     @Test
     public void testCheckExistsParticipant() {
-        // Arrange
         ParticipantEntity participantEntity = new ParticipantEntity();
         when(participantRepository.existByUsernameEmailTelegramIdMobileNumber(any(), any(), any(), any())).thenReturn(true);
 
-        // Act
         boolean existsParticipant = participantService.checkExistsParticipant(participantEntity);
 
-        // Assert
         assert(existsParticipant);
         verify(participantRepository, times(1)).existByUsernameEmailTelegramIdMobileNumber(any(), any(), any(), any());
     }
 
     @Test
     public void testGetParticipantsByInternship() {
-        // Arrange
         InternshipEntity internshipEntity = new InternshipEntity();
         List<ParticipantEntity> participantEntities = new ArrayList<>();
         when(participantRepository.getAllByInternship(internshipEntity)).thenReturn(participantEntities);
 
-        // Act
         List<ParticipantEntity> retrievedParticipantEntities = participantService.getParticipantsByInternship(internshipEntity);
 
-        // Assert
         assert(retrievedParticipantEntities != null);
         assert(retrievedParticipantEntities.equals(participantEntities));
         verify(participantRepository, times(1)).getAllByInternship(internshipEntity);
@@ -100,27 +91,21 @@ public class ParticipantServiceTest {
 
     @Test
     public void testRemoveParticipant() {
-        // Arrange
         ParticipantEntity participantEntity = new ParticipantEntity();
 
-        // Act
         participantService.removeParticipant(participantEntity);
 
-        // Assert
         verify(participantRepository, times(1)).delete(participantEntity);
     }
 
     @Test
     public void testGetParticipantByUsername() {
-        // Arrange
         String username = "testuser";
         ParticipantEntity participantEntity = new ParticipantEntity();
         when(participantRepository.getParticipantByUsername(username)).thenReturn(participantEntity);
 
-        // Act
         ParticipantEntity retrievedParticipantEntity = participantService.getParticipantByUsername(username);
 
-        // Assert
         assert(retrievedParticipantEntity != null);
         assert(retrievedParticipantEntity.equals(participantEntity));
         verify(participantRepository, times(1)).getParticipantByUsername(username);
@@ -144,15 +129,12 @@ public class ParticipantServiceTest {
 
     @Test
     public void testDelete() {
-        // Arrange
         Long participantId = 1L;
         ParticipantEntity participantEntity = new ParticipantEntity();
         when(participantRepository.getById(participantId)).thenReturn(participantEntity);
 
-        // Act
         participantService.delete(participantId);
 
-        // Assert
         verify(participantRepository, times(1)).delete(participantEntity);
     }
 }

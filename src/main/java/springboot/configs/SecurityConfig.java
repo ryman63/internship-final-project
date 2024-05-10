@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             throws Exception {
         auth
                 .jdbcAuthentication()
-                .dataSource(dataSource);
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -43,11 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/public/**").permitAll() // Публичная часть
                 .antMatchers("/api/users/**").hasRole("USER") // Пользовательская часть
-                .antMatchers("/api/admins/**").hasRole("ADMIN"); // Административная часть
+                .antMatchers("/api/admins/**").hasRole("ADMIN") // Административная часть
+                .anyRequest().authenticated();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
 }

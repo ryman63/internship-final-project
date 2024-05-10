@@ -31,21 +31,17 @@ public class EmailServiceTest {
 
     @Test
     public void testSendSimpleMessage() {
-        // Arrange
         String to = "test@example.com";
         String subject = "Test Subject";
         String text = "Test Message";
 
-        // Act
         emailService.sendSimpleMessage(to, subject, text);
 
-        // Assert
         verify(emailSender, times(1)).send(any(SimpleMailMessage.class));
     }
 
     @Test
     public void testSendMessageAllAdmins() {
-        // Arrange
         String subject = "Test Subject";
         String text = "Test Message";
 
@@ -61,10 +57,8 @@ public class EmailServiceTest {
 
         when(userRepository.getAllAdmins()).thenReturn(admins);
 
-        // Act
         emailService.sendMessageAllAdmins(subject, text);
 
-        // Assert
         verify(emailSender, times(2)).send(any(SimpleMailMessage.class));
     }
 }

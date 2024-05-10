@@ -26,12 +26,6 @@ public class UserServiceTest {
     @Mock
     private ParticipantRepository participantRepository;
 
-    @Mock
-    private UserDtoUserEntityMapper userMapper;
-
-    @Mock
-    private ParticipantEntityUserDtoMapper participantMapper;
-
     @InjectMocks
     private UserService userService;
 

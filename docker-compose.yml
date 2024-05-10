@@ -19,6 +19,7 @@ services:
   web:
     container_name: web
     build: .
+    restart: always
     ports:
       - "8000:8080"
     depends_on:

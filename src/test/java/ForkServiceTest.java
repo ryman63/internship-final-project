@@ -36,19 +36,15 @@ public class ForkServiceTest {
 
     @Test
     public void testAdd() {
-        // Arrange
         ForkEntity forkEntity = new ForkEntity();
 
-        // Act
         forkService.add(forkEntity);
 
-        // Assert
         verify(forkRepository, times(1)).save(forkEntity);
     }
 
     @Test
     public void testGetAllForksByLesson() {
-        // Arrange
         Long lessonId = 1L;
         LessonEntity lessonEntity = new LessonEntity();
         lessonEntity.setId(lessonId);
@@ -56,16 +52,13 @@ public class ForkServiceTest {
         when(lessonRepository.getById(lessonId)).thenReturn(lessonEntity);
         when(forkRepository.findAllByLesson(lessonEntity)).thenReturn(expectedForks);
 
-        // Act
         List<ForkEntity> result = forkService.getAllForksByLesson(lessonId);
 
-        // Assert
         assertEquals(expectedForks, result);
     }
 
     @Test
     public void testGetAllForksByInternship() {
-        // Arrange
         Long internshipId = 1L;
         InternshipEntity internshipEntity = new InternshipEntity();
         internshipEntity.setId(internshipId);
@@ -73,10 +66,8 @@ public class ForkServiceTest {
         when(internshipRepository.getById(internshipId)).thenReturn(internshipEntity);
         when(forkRepository.findAllByInternship(internshipEntity)).thenReturn(expectedForks);
 
-        // Act
         List<ForkEntity> result = forkService.getAllForksByInternship(internshipId);
 
-        // Assert
         assertEquals(expectedForks, result);
     }
 

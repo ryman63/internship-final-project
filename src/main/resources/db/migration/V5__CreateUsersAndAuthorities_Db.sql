@@ -17,7 +17,7 @@ INSERT INTO users (username, password, email, enabled)
 VALUES ('admin01', '{noop}admin', 'admin@example.com', true);
 
 INSERT INTO users (username, password, email, enabled)
-VALUES ('user01', '{noop}userEntity', 'user@example.com', true);
+VALUES ('user01', '{noop}user', 'user@example.com', true);
 
 
 INSERT INTO authorities (username, authority)

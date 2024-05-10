@@ -27,28 +27,22 @@ public class InternshipServiceTest {
 
     @Test
     public void testGetInternshipById() {
-        // Arrange
         Long internshipId = 1L;
         InternshipEntity entity = new InternshipEntity();
         when(repository.getById(internshipId)).thenReturn(entity);
 
-        // Act
         InternshipEntity result = service.getInternshipById(internshipId);
 
-        // Assert
         assert(result != null);
         verify(repository, times(1)).getById(internshipId);
     }
 
     @Test
     public void testRemoveInternship() {
-        // Arrange
         InternshipEntity entity = new InternshipEntity();
 
-        // Act
         service.removeInternship(entity);
 
-        // Assert
         verify(repository, times(1)).delete(entity);
     }
 }

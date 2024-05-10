@@ -40,45 +40,36 @@ public class LessonServiceTest {
     }
     @Test
     public void testDelete() {
-        // Arrange
         Long lessonId = 1L;
         LessonEntity lessonEntity = new LessonEntity();
         when(lessonRepository.getById(lessonId)).thenReturn(lessonEntity);
 
-        // Act
         lessonService.delete(lessonId);
 
-        // Assert
         verify(lessonRepository, times(1)).delete(lessonEntity);
     }
 
 
     @Test
     public void testGetLessonById() {
-        // Arrange
         Long lessonId = 1L;
         LessonEntity lessonEntity = new LessonEntity();
         when(lessonRepository.getById(lessonId)).thenReturn(lessonEntity);
 
-        // Act
         LessonEntity result = lessonService.getLessonById(lessonId);
 
-        // Assert
         assert(result != null);
         verify(lessonRepository, times(1)).getById(lessonId);
     }
 
     @Test
     void getLessonById_shouldReturnLessonEntity() {
-        // Arrange
         Long lessonId = 1L;
         LessonEntity expectedLesson = new LessonEntity();
         when(lessonRepository.getById(lessonId)).thenReturn(expectedLesson);
 
-        // Act
         LessonEntity lessonById = lessonService.getLessonById(lessonId);
 
-        // Assert
         assertEquals(expectedLesson, lessonById);
     }
 
