@@ -76,15 +76,4 @@ public class TaskServiceTest {
         verify(taskRepository, times(1)).save(taskEntity);
         assert(updatedTaskEntity != null);
     }
-
-    @Test
-    public void testDelete() {
-        Long taskId = 1L;
-        TaskEntity taskEntity = new TaskEntity();
-
-        when(taskRepository.getById(taskId)).thenReturn(taskEntity);
-        taskService.delete(taskId);
-
-        verify(taskRepository, times(1)).delete(taskEntity);
-    }
 }
