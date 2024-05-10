@@ -1,35 +1,80 @@
 package springboot.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import springboot.models.Authority;
-import springboot.models.User;
+import springboot.dto.UserDto;
+import springboot.entities.AuthorityEntity;
+import springboot.entities.ParticipantEntity;
+import springboot.entities.UserEntity;
+import springboot.mapper.ParticipantEntityUserDtoMapper;
+import springboot.mapper.UserDtoUserEntityMapper;
 import springboot.repositories.AuthorityRepository;
+import springboot.repositories.ParticipantRepository;
 import springboot.repositories.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserService {
-    @Autowired
     final UserRepository userRepository;
-    @Autowired
     final AuthorityRepository authorityRepository;
+    final ParticipantRepository participantRepository;
 
-    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository) {
-        this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
-    }
-
-    public User getUserByName(String username){
+    public UserEntity getUserByName(String username) {
         return userRepository.getUsersByName(username);
     }
 
-    public void addUser(User user, Authority userAuthority) {
-        userRepository.save(user);
-        authorityRepository.save(userAuthority);
+    public UserEntity saveUser(UserDto userDto) throws Exception {
+        if (userDto == null)
+            throw new Exception("user is null");
+        UserEntity entity = UserDtoUserEntityMapper.MAPPER.toUserEntity(userDto);
+        entity.setEnabled(true);
+
+        AuthorityEntity userAuthorityEntity = new AuthorityEntity();
+        userAuthorityEntity.setUser(entity);
+        userAuthorityEntity.setAuthority("ROLE_USER");
+
+        UserEntity outEntity = userRepository.save(entity);
+        authorityRepository.save(userAuthorityEntity);
+        return outEntity;
+    }
+
+    public void saveAdmin(UserDto userDto) throws Exception {
+        if (userDto == null)
+            throw new Exception("user is null");
+        UserEntity entity = UserDtoUserEntityMapper.MAPPER.toUserEntity(userDto);
+        entity.setEnabled(true);
+
+        AuthorityEntity userAuthorityEntity = new AuthorityEntity();
+        userAuthorityEntity.setUser(entity);
+        userAuthorityEntity.setAuthority("ROLE_ADMIN");
+
+        userRepository.save(entity);
+        authorityRepository.save(userAuthorityEntity);
     }
 
     public void removeUserByName(String username) {
         userRepository.removeUserByName(username);
         authorityRepository.removeAuthorityByName(username);
+    }
+
+    public UserEntity getUserByParticipantId(Long participantId) {
+
+        ParticipantEntity participantEntity = participantRepository.getById(participantId);
+        if (participantEntity == null)
+            return null;
+        String username = participantEntity.getUsername();
+        return userRepository.getUsersByName(username);
+
+    }
+
+    public UserEntity createUserByParticipant(Long participantId) throws Exception {
+        ParticipantEntity participantEntity = participantRepository.getById(participantId);
+
+        UserDto userDto = ParticipantEntityUserDtoMapper.MAPPER.toUserDto(participantEntity);
+
+        // выставляем пароль равный username
+        userDto.setPassword(userDto.getUsername());
+        // создание нового пользователя с ролью User
+        return saveUser(userDto);
     }
 }

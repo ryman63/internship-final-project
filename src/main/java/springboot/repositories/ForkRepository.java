@@ -4,19 +4,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import springboot.models.Fork;
-import springboot.models.Internship;
-import springboot.models.Lesson;
+import springboot.entities.*;
 
 import java.util.List;
 
 @Repository
-public interface ForkRepository extends JpaRepository<Fork, Long> {
-    @Query("select forks from Fork forks where forks.lesson = ?1")
-    public List<Fork> findAllByLesson(Lesson lesson);
+public interface ForkRepository extends JpaRepository<ForkEntity, Long> {
+    @Query("select forks from ForkEntity forks where forks.lesson = ?1")
+    public List<ForkEntity> findAllByLesson(LessonEntity lessonEntity);
     @Modifying
-    @Query("delete Fork fork where fork.lesson.internship = ?1")
-    public void removeAllByInternship(Internship internship);
-    @Query("select forks from Fork forks where forks.lesson.internship = ?1")
-    public List<Fork> findAllByInternship(Internship internship);
+    @Query("delete ForkEntity fork where fork.lesson.internship = ?1")
+    public void removeAllByInternship(InternshipEntity internshipEntity);
+    @Query("select forks from ForkEntity forks where forks.lesson.internship = ?1")
+    public List<ForkEntity> findAllByInternship(InternshipEntity internshipEntity);
+
+    @Query("select fork from ForkEntity fork where fork.task.id = ?1 and fork.participant.id = ?2")
+    public ForkEntity getForkByTaskAndParticipant(Long taskId, Long participantId);
 }

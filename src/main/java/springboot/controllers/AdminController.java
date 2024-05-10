@@ -1,123 +1,147 @@
 package springboot.controllers;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import springboot.dto.*;
 import springboot.mapper.InternshipArchivedInternshipMapper;
 import springboot.mapper.ParticipantArchivedParticipantMapper;
+import springboot.mapper.PerformanceDtoPerformanceEntityMapper;
 import springboot.mapper.PerformanceArchivedPerformanceMapper;
-import springboot.models.*;
+import springboot.entities.*;
 import springboot.services.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/admin")
+@RequestMapping("api/admins")
+@AllArgsConstructor
 public class AdminController {
-
-    @Autowired
     private InternshipService internshipService;
-    @Autowired
     private ParticipantService participantService;
-    @Autowired
     private TaskService taskService;
-    @Autowired
     private PerformanceService performanceService;
-    @Autowired
     private ArchivedService archivedService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ForkService forkService;
-    @Autowired
     private GitlabService gitlabService;
+    private UserService userService;
+    LessonService lessonService;
+    ForkService forkService;
+    EmailService emailService;
 
-    /**Переносит стажировку в архив*/
-    @ApiOperation(value = "Переносит стажировку в архив")
-    @GetMapping("/archive/{internshipId}")
-    public ResponseEntity<?> archivedInternship(@PathVariable Long internshipId) {
+
+    /**Публикует занятие по ID - возвращает кол-во созданных форков*/
+    @ApiOperation(value = "Публикует занятие по ID")
+    @PostMapping("/publication/{lessonId}")
+    public ResponseEntity<?> publication(@PathVariable Long lessonId) {
         try {
-            Internship internship = internshipService.getInternshipById(internshipId);
-            if (internship == null)
-                throw new NullPointerException("Internship null");
+            int counterForks = lessonService.lessonPublication(lessonId);
 
-            // архивируем стажировку
-            ArchivedInternship archivedInternship = InternshipArchivedInternshipMapper.MAPPER.toArchivedInternship(internship);
-            archivedService.addArchivedInternship(archivedInternship);
+            return ResponseEntity.ok(new PublicationResponseDto(counterForks));
+        } catch (Exception e) {
+            // в случае ошибки отправляем сообщение всем админам на почту
+            emailService.sendMessageAllAdmins("Ошибка", "Ошибка создания форков проекта");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
-            List<Participant> participantList = participantService.GetParticipantsByInternship(internship);
-            if (participantList == null)
-                throw new NullPointerException("Participants null");
+    /**Проверка занятий - выдаёт список свежих коммитов занятия*/
+    @ApiOperation(value = "Проверка занятий - выдаёт список свежих коммитов занятия")
+    @GetMapping("/checkTasks/{lessonId}")
+    public ResponseEntity<?> checkTasksLesson(@PathVariable Long lessonId) {
+        try {
 
-            for (Participant participant : participantList) {
-                // архивируем участников стажировки
-                ArchivedParticipant archivedParticipant = ParticipantArchivedParticipantMapper.MAPPER.toArchivedParticipant(participant);
-                archivedParticipant.setInternship(archivedInternship);
-                archivedService.addArchivedParticipant(archivedParticipant);
+            return ResponseEntity.ok(taskService.getCheckTasksByLesson(lessonId));
 
-                List<Performance> performanceList = performanceService.getPerformancesByParticipant(participant);
-                if (performanceList != null) {
-                    for (Performance performance : performanceList) {
-                        // архивируем успеваемость участников
-                        ArchivedPerformance archivedPerformance = PerformanceArchivedPerformanceMapper.MAPPER.toArchivedPerformance(performance);
-                        archivedPerformance.setTaskName(performance.getTask().getName());
-                        archivedPerformance.setParticipant(archivedParticipant);
-                        archivedService.addArchivedPerformance(archivedPerformance);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
 
-                        // удаляем из базы устаревшую успеваемость участников
-                        performanceService.removePerformance(performance);
-                    }
-                }
+    }
 
-                // удаляем из базы бывших участников стажировки
-                participantService.removeParticipant(participant);
 
-                // удаляем пользователей из базы
-                userService.removeUserByName(participant.getUsername());
+    /**Подтверждает участие в стажировке - принимает ID стажировки и ID участника*/
+    @ApiOperation(value = "Подписаться на участие в стажировке - принимает ID стажировки и объект участника")
+    @PostMapping("/signup/{internshipId}/{participantId}")
+    public ResponseEntity<?> signUpForInternship(@PathVariable Long internshipId, @PathVariable Long participantId) {
+        try {
 
-                // удаляем пользователей из гитлаба
-                gitlabService.deleteUserById(participant.getGitlabId());
-            }
+            UserEntity createUser = userService.createUserByParticipant(participantId);
 
-            // удаление из базы закончившейся стажировки
-            internshipService.removeInternship(internship);
+            Long createUserId = gitlabService.createUser(participantId);
 
-            // удаление форков
-            List<Fork> forks = forkService.getAllForksByInternship(internship);
-            for (Fork fork : forks) {
-                gitlabService.deleteProjectById(fork.getGitLabRepositoryId());
-            }
+            // обновляем данные в базе
+            participantService.signUpParticipantForInternship(participantId, internshipId, createUserId);
 
-            // удаление эталонных репозиториев
-            List<Task> tasks = taskService.getAllByInternship(internship);
-            for (Task task : tasks) {
-                gitlabService.deleteProjectById(task.getGitLabRepositoryId());
-            }
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    /**
+     * Переносит стажировку в архив
+     */
+    @ApiOperation(value = "Переносит стажировку в архив")
+    @DeleteMapping("/archive/{internshipId}")
+    public ResponseEntity<?> archiveInternship(@PathVariable Long internshipId) {
+        try {
+            // архивируем стажировку с последующим удалением репозиториев и юзеров
+            archivedService.archiveInternship(internshipId);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
-        return ResponseEntity.ok("Internship successfully archive");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
     }
 
-    /**Выставляет оценку заданию по ID задания и ID участника*/
+    /**
+     * Выставляет оценку заданию по ID задания и ID участника
+     */
     @ApiOperation(value = "Выставляет оценку заданию по ID задания и ID участника")
     @PostMapping("/rate/{taskId}/{participantId}")
-    public ResponseEntity<?> rateParticipantTask(@PathVariable Long taskId, @PathVariable Long participantId){
+    public ResponseEntity<?> rateParticipantTask(@PathVariable Long taskId, @PathVariable Long participantId, @RequestBody PerformanceDto performanceDto) {
         try {
-            Task task = taskService.getTaskById(taskId);
-            Participant participant = participantService.getParticipantById(participantId);
+            PerformanceEntity entity = performanceService.save(performanceDto, taskId, participantId);
 
+            // если комментарий указан, то отправляем комментарий пользователю под последний коммит
+            if(!performanceDto.getComment().isEmpty())
+                gitlabService.createCommentForCommit(taskId, participantId, new Comment(performanceDto.getComment()));
+            return ResponseEntity.ok(entity);
         } catch (Exception exception) {
-            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
-        return ResponseEntity.ok("");
+
+    }
+
+
+    /*** Отчисляет участника со стажировки по Id стажировки и объекту participant*/
+    @ApiOperation(value = "Отчисляет участника со стажировки по Id стажировки и Id участника")
+    @DeleteMapping("/dropout/{internshipId}/{participantId}")
+    public ResponseEntity<?> dropOut(@PathVariable Long internshipId, @PathVariable Long participantId) {
+        try {
+            archivedService.archiveParticipant(internshipId, participantId);
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+    }
+
+    /**Возвращает ведомость в которой указаны все опубликованные задачи*/
+    @ApiOperation(value = "Возвращает ведомость в которой указаны все опубликованные задачи")
+    @GetMapping("/statement/{internshipId}")
+    public ResponseEntity<?> getStatement(@PathVariable Long internshipId) {
+        try{
+            InternshipEntity internshipEntity = internshipService.getInternshipById(internshipId);
+
+            List<StatementElement> statement = performanceService.getStatement(internshipId);
+
+            return ResponseEntity.ok(statement);
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
     }
 }

@@ -1,30 +1,37 @@
 package springboot.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import springboot.models.Internship;
-import springboot.models.Participant;
+import springboot.dto.InternshipDto;
+import springboot.entities.InternshipEntity;
+import springboot.mapper.InternshipDtoInternshipEntityMapper;
 import springboot.repositories.InternshipRepository;
-import springboot.repositories.ParticipantRepository;
 
 @Service
+@AllArgsConstructor
 public class InternshipService {
-    @Autowired
     final InternshipRepository repository;
-    public InternshipService(InternshipRepository internshipRepository) {
-        this.repository = internshipRepository;
+    public InternshipEntity save(InternshipDto internshipDto){
+        return repository.save(InternshipDtoInternshipEntityMapper.MAPPER.toInternshipEntity(internshipDto));
     }
 
-    public void addInternship(Internship internship){
-        repository.save(internship);
+    public InternshipEntity update(InternshipDto internshipDto, Long internshipId) {
+        InternshipEntity internshipEntity = repository.getById(internshipId);
+        internshipEntity.setName(internshipDto.getName());
+        internshipEntity.setDescription(internshipDto.getDescription());
+        internshipEntity.setState(internshipDto.getState());
+        internshipEntity.setDateEnd(internshipDto.getDateEnd());
+        internshipEntity.setDateBegin(internshipDto.getDateBegin());
+        internshipEntity.setDateEndRecording(internshipDto.getDateEndRecording());
+        return repository.save(internshipEntity);
     }
 
-    public Internship getInternshipById(Long id) {
+    public InternshipEntity getInternshipById(Long id) {
         return repository.getById(id);
     }
 
-    public void removeInternship(Internship internship){
-        repository.delete(internship);
+    public void removeInternship(InternshipEntity internshipEntity){
+        repository.delete(internshipEntity);
     }
 
 }

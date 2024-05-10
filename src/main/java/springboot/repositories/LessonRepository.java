@@ -2,14 +2,14 @@ package springboot.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Repository;
-import springboot.models.Lesson;
+import springboot.entities.LessonEntity;
+import springboot.entities.TaskEntity;
 
 import java.util.List;
 
 @Repository
-public interface LessonRepository extends JpaRepository<Lesson, Long> {
-//    @Query("select t from Task t, Lesson l where l.Tasks = ")
-//    public List<Task> getTasks();
+public interface LessonRepository extends JpaRepository<LessonEntity, Long> {
+    @Query("select t from TaskEntity t where t.lesson = ?1")
+    public List<TaskEntity> getTasks(LessonEntity lesson);
 }

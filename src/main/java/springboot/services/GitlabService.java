@@ -1,32 +1,44 @@
 package springboot.services;
 
+import com.google.common.annotations.Beta;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import springboot.mapper.ParticipantGitlabUserMapper;
-import springboot.models.*;
+import springboot.dto.*;
+import springboot.entities.*;
+import springboot.mapper.ParticipantEntityGitlabUserMapper;
+import springboot.repositories.ForkRepository;
+import springboot.repositories.ParticipantRepository;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 public class GitlabService {
+
+    ForkRepository forkRepository;
+    ParticipantRepository participantRepository;
+
+    UserService userService;
+
+    public GitlabService(ForkRepository forkRepository, ParticipantRepository participantRepository) {
+        this.forkRepository = forkRepository;
+        this.participantRepository = participantRepository;
+    }
 
     @Value("${gitlab.apiUrl}")
     private String gitLabApiUrl;
 
     @Value("${gitlab.token}")
     private String gitLabToken;
+
     RestTemplate restTemplate = new RestTemplate();
-
-
-    public GitlabService() {
-
-    }
 
     public void deleteUserById(String userId) {
         try {
@@ -60,8 +72,14 @@ public class GitlabService {
         }
     }
 
-    public Long createUser(GitlabUser gitlabUser) {
+    public Long createUser(Long participantId) {
         try {
+            ParticipantEntity participant = participantRepository.getById(participantId);
+
+            GitlabUser gitlabUser = ParticipantEntityGitlabUserMapper.MAPPER.toGitLabUser(participant);
+
+            gitlabUser.setPassword("groaworwa22314!");
+
             HttpHeaders headers = new HttpHeaders();
 
             headers.setBearerAuth(gitLabToken);
@@ -102,7 +120,7 @@ public class GitlabService {
         }
     }
 
-    public Long createProject(Task task) {
+    public Long createProject(TaskDto taskDto) {
         try {
             HttpHeaders headers = new HttpHeaders();
 
@@ -112,7 +130,7 @@ public class GitlabService {
             String projectUrl = gitLabApiUrl + "/projects";
 
             HttpEntity<String> requestEntity = new HttpEntity<>(
-                    "{\"name\": \"" + task.getName() + "\", "
+                    "{\"name\": \"" + taskDto.getName() + "\", "
                             + "\"initialize_with_readme\": \"true\"}", headers);
 
             ResponseEntity<String> response = restTemplate.exchange(projectUrl, HttpMethod.POST, requestEntity, String.class);
@@ -127,14 +145,14 @@ public class GitlabService {
         }
     }
 
-    public CheckTask getLastForkCommit(Fork fork) {
+    public CheckTask getLastForkCommit(ForkEntity fork) {
         try {
             HttpHeaders headers = new HttpHeaders();
 
             headers.setBearerAuth(gitLabToken);
             headers.add("Content-Type", "application/json");
 
-            String url = gitLabApiUrl + "/projects/" + fork.getGitLabRepositoryId() + "/repository/commits?author=" + fork.getUser().getUsername() +"&order_by=created_at&sort=desc&per_page=1";
+            String url = gitLabApiUrl + "/projects/" + fork.getGitLabRepositoryId() + "/repository/commits?author=" + fork.getParticipant().getEmail() +"&order_by=created_at&sort=desc&per_page=1";
 
             // Отправка запроса
             ResponseEntity<String> responseCommits = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
@@ -146,10 +164,12 @@ public class GitlabService {
 
             JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-            CheckTask checkTask = new CheckTask(fork.getTask().getId(),
+            CheckTask checkTask = new CheckTask(
+                    jsonObject.getString("id"),
+                    fork.getTask().getId(),
                     fork.getTask().getName(),
-                    fork.getUser().getId(),
-                    fork.getUser().getUsername(),
+                    fork.getParticipant().getId(),
+                    fork.getParticipant().getUsername(),
                     OffsetDateTime.parse(jsonObject.getString("committed_date")),
                     jsonObject.getString("author_name"),
                     jsonObject.getString("web_url"));
@@ -160,7 +180,7 @@ public class GitlabService {
         }
     }
 
-    public Long createFork(Task task, String participantUsername) {
+    public Long createFork(TaskEntity taskEntity, String participantUsername) {
         try {
             HttpHeaders headers = new HttpHeaders();
 
@@ -169,11 +189,11 @@ public class GitlabService {
 
             // создаём форк таски
             HttpEntity<String> requestEntity = new HttpEntity<>(
-                    "{\"name\": \"" + task.getName() + "\", "
+                    "{\"name\": \"" + taskEntity.getName() + "\", "
                             + "\"namespace_path\": \"" + participantUsername + "\", "
-                            + "\"path\": \"" + task.getName() + "\"}", headers);
+                            + "\"path\": \"" + taskEntity.getName() + "\"}", headers);
 
-            String url = gitLabApiUrl + "/projects/" + task.getGitLabRepositoryId() + "/fork";
+            String url = gitLabApiUrl + "/projects/" + taskEntity.getGitLabRepositoryId() + "/fork";
 
             // Отправка запроса
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
@@ -182,6 +202,35 @@ public class GitlabService {
 
             // тут получаем из ответа гитлаба id
             return responseJsonObject.getLong("id");
+        } catch (Exception exception) {
+            throw new IllegalArgumentException(exception.getMessage());
+        }
+    }
+
+    public void createCommentForCommit(Long taskId, Long participantId, Comment comment) {
+        try {
+            ForkEntity forkEntity = forkRepository.getForkByTaskAndParticipant(taskId, participantId);
+            CheckTask checkTask = getLastForkCommit(forkEntity);
+            if(checkTask == null)
+                throw new Exception("коммит не найден");
+
+            HttpHeaders headers = new HttpHeaders();
+
+            headers.setBearerAuth(gitLabToken);
+            headers.add("Content-Type", "application/json");
+
+            // создаём коммент под коммитом
+            HttpEntity<Comment> requestEntity = new HttpEntity<>(comment, headers);
+
+            String url = gitLabApiUrl + "/projects/"
+                    + forkEntity.getGitLabRepositoryId()
+                    + "/repository/commits/"
+                    + checkTask.getCommitSha()
+                    +"/comments";
+
+            // Отправка запроса
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
         } catch (Exception exception) {
             throw new IllegalArgumentException(exception.getMessage());
         }

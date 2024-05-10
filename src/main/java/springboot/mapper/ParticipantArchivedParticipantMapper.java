@@ -4,10 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
-import springboot.models.ArchivedInternship;
-import springboot.models.ArchivedParticipant;
-import springboot.models.Internship;
-import springboot.models.Participant;
+import springboot.entities.ArchivedParticipantEntity;
+import springboot.entities.ParticipantEntity;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ParticipantArchivedParticipantMapper {
@@ -26,5 +24,5 @@ public interface ParticipantArchivedParticipantMapper {
     @Mapping(source = "faculty", target = "faculty")
     @Mapping(source = "specialty", target = "specialty")
     @Mapping(source = "course", target = "course")
-    ArchivedParticipant toArchivedParticipant(Participant participant);
+    ArchivedParticipantEntity toArchivedParticipant(ParticipantEntity participantEntity);
 }

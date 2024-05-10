@@ -1,36 +1,40 @@
 package springboot.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import springboot.models.Fork;
-import springboot.models.Internship;
-import springboot.models.Lesson;
+import springboot.entities.ForkEntity;
+import springboot.entities.InternshipEntity;
+import springboot.entities.LessonEntity;
 import springboot.repositories.ForkRepository;
+import springboot.repositories.InternshipRepository;
+import springboot.repositories.LessonRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ForkService {
 
-    @Autowired
     final ForkRepository forkRepository;
+    final LessonRepository lessonRepository;
+    final InternshipRepository internshipRepository;
 
-
-    public ForkService(ForkRepository forkRepository) {
-        this.forkRepository = forkRepository;
-    }
-
-    public void add(Fork fork){
+    public void add(ForkEntity fork) {
         forkRepository.save(fork);
     }
-
-    public List<Fork> getAllForksByLesson(Lesson lesson) {
-        return forkRepository.findAllByLesson(lesson);
+    public List<ForkEntity> getAllForksByLesson(Long lessonId) {
+        LessonEntity lessonEntity = lessonRepository.getById(lessonId);
+        return forkRepository.findAllByLesson(lessonEntity);
     }
 
-    public List<Fork> getAllForksByInternship(Internship internship) { return  forkRepository.findAllByInternship(internship);}
+    public List<ForkEntity> getAllForksByInternship(Long internshipId) {
+        InternshipEntity internshipEntity = internshipRepository.getById(internshipId);
+        return forkRepository.findAllByInternship(internshipEntity);
+    }
 
-    public void removeAllByInternship(Internship internship) {
-        forkRepository.removeAllByInternship(internship);
+    public void removeAllByInternship(Long internshipId) {
+        InternshipEntity internshipEntity = internshipRepository.getById(internshipId);
+        forkRepository.removeAllByInternship(internshipEntity);
     }
 }
