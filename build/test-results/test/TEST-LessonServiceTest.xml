@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LessonServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-10T18:37:21" hostname="DMITRIY" time="0.005">
+  <properties/>
+  <testcase name="testGetLessonById()" classname="LessonServiceTest" time="0.001"/>
+  <testcase name="getLessonById_shouldReturnLessonEntity()" classname="LessonServiceTest" time="0.001"/>
+  <testcase name="testDelete()" classname="LessonServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

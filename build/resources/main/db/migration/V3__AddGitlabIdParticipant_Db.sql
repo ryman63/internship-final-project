@@ -1,0 +1,1 @@
+alter table if exists participant add column gitlab_id varchar(255);

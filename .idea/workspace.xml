@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="164fde6b-3e09-40b0-96c8-b265eb41d66c" name="Changes" comment="небольшие исправления и немного асинхронности" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="project-2024" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="project-2024" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="project-2024" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="project-2024" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="project-2024" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2fSR5ErIsMfAo3VXGacPmlrHfqK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Batch.Docker_run.executor&quot;: &quot;Run&quot;,
+    &quot;Batch.container_run.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ArchiveServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ArchivedServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build project-2024.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EmailServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ForkServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.InternshipServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.LessonServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ParticipantServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PerformanceServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TaskServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [:MvcApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [bootBuildImage].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [bootJarMainClassName].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [bootJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [bootRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [compileJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [gradlew bootRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024 [init].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project-2024.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Shell Script.docker_run.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MvcApplication.executor&quot;: &quot;Run&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/porta/IdeaProjects/project-2024&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\porta\IdeaProjects\project-2024\src\main\resources" />
+      <recent name="C:\Users\porta\IdeaProjects\project-2024" />
+      <recent name="C:\Users\porta\IdeaProjects\project-2024\docker" />
+      <recent name="C:\Users\porta\IdeaProjects\project-2024\src\main" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Batch.Docker_run">
+    <configuration name="Docker_run" type="BatchConfigurationType" factoryName="Batch">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PARENT_ENVS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="./scripts/container_run.bat" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Gradle.BeforeRunTask" enabled="true" tasks="build" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+        <option name="Gradle.BeforeRunTask" enabled="true" tasks="bootJar" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+      </method>
+    </configuration>
+    <configuration name="project-2024 [bootJarMainClassName]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootJarMainClassName" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
+        <extension name="net.ashald.envfile">
+          <option name="IS_ENABLED" value="false" />
+          <option name="IS_SUBST" value="false" />
+          <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+          <option name="IS_IGNORE_MISSING_FILES" value="false" />
+          <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+          <ENTRIES>
+            <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          </ENTRIES>
+        </extension>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="project-2024 [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="project-2024 [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="project-2024 [compileJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="compileJava" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="project-2024 [init]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="init" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="MvcApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="project-2024.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="springboot.MvcApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Batch.Docker_run" />
+      <item itemvalue="Gradle.project-2024 [bootJarMainClassName]" />
+      <item itemvalue="Gradle.project-2024 [bootJar]" />
+      <item itemvalue="Gradle.project-2024 [compileJava]" />
+      <item itemvalue="Gradle.project-2024 [build]" />
+      <item itemvalue="Gradle.project-2024 [init]" />
+      <item itemvalue="Spring Boot.MvcApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.project-2024 [bootJar]" />
+        <item itemvalue="Gradle.project-2024 [build]" />
+        <item itemvalue="Gradle.project-2024 [bootJarMainClassName]" />
+        <item itemvalue="Gradle.project-2024 [compileJava]" />
+        <item itemvalue="Gradle.project-2024 [init]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-1.8.0_402-temurin-1.8.0_402-4caba194b151-d4a4326d" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="164fde6b-3e09-40b0-96c8-b265eb41d66c" name="Changes" comment="" />
+      <created>1713792308336</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713792308336</updated>
+      <workItem from="1713792309841" duration="12515000" />
+      <workItem from="1713817721790" duration="622000" />
+      <workItem from="1713858381920" duration="3764000" />
+      <workItem from="1713862721196" duration="13739000" />
+      <workItem from="1713876819504" duration="8042000" />
+      <workItem from="1713886213249" duration="13666000" />
+      <workItem from="1714116178684" duration="272000" />
+      <workItem from="1714117638090" duration="28945000" />
+      <workItem from="1714227143055" duration="6770000" />
+      <workItem from="1714458443935" duration="15815000" />
+      <workItem from="1714478374631" duration="8984000" />
+      <workItem from="1714567714673" duration="16856000" />
+      <workItem from="1714643702116" duration="7238000" />
+      <workItem from="1714653452549" duration="29138000" />
+      <workItem from="1714913979108" duration="14889000" />
+      <workItem from="1714935402298" duration="8715000" />
+      <workItem from="1714979639482" duration="19573000" />
+      <workItem from="1715000372017" duration="5627000" />
+      <workItem from="1715017173096" duration="5775000" />
+      <workItem from="1715068394965" duration="11050000" />
+      <workItem from="1715152562742" duration="45457000" />
+      <workItem from="1715236009830" duration="40492000" />
+      <workItem from="1715324354641" duration="13365000" />
+      <workItem from="1715341970497" duration="1817000" />
+      <workItem from="1715345367788" duration="4881000" />
+      <workItem from="1715351330787" duration="8412000" />
+      <workItem from="1715359827491" duration="1647000" />
+      <workItem from="1715361640838" duration="96000" />
+      <workItem from="1715362418915" duration="428000" />
+      <workItem from="1715363124999" duration="2532000" />
+    </task>
+    <task id="LOCAL-00001" summary="gradle, docker, models, mainApp">
+      <option name="closed" value="true" />
+      <created>1713877226482</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877226482</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add controllers: (Admin, Public, User, Participant, Internship),&#10;add repositories and services,&#10;add Security basic Auth,&#10;add V1_init migration,&#10;add LoggingFilter">
+      <option name="closed" value="true" />
+      <created>1714151832526</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714151832526</updated>
+    </task>
+    <task id="LOCAL-00003" summary=".">
+      <option name="closed" value="true" />
+      <created>1714152692464</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714152692464</updated>
+    </task>
+    <task id="LOCAL-00004" summary="подписание нового участника теперь автоматически добавляет нового пользователя в gitlab, добавлен метод публикации занятия">
+      <option name="closed" value="true" />
+      <created>1714573928344</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714573928344</updated>
+    </task>
+    <task id="LOCAL-00005" summary="добавлен эндпоинт публикации занятия, отправки стажировки в архив, просмотра последних коммитов">
+      <option name="closed" value="true" />
+      <created>1715001136928</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715001136928</updated>
+    </task>
+    <task id="LOCAL-00006" summary="конфигурация swagger2">
+      <option name="closed" value="true" />
+      <created>1715068572855</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715068572855</updated>
+    </task>
+    <task id="LOCAL-00007" summary="добавлены dto, добавлен эндпоинт получения ведомости, добавлены некоторые тесты и небольшой рефакторинг">
+      <option name="closed" value="true" />
+      <created>1715357623859</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715357623859</updated>
+    </task>
+    <task id="LOCAL-00008" summary="небольшие исправления и немного асинхронности">
+      <option name="closed" value="true" />
+      <created>1715366113678</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715366113678</updated>
+    </task>
+    <task id="LOCAL-00009" summary="небольшие исправления и немного асинхронности">
+      <option name="closed" value="true" />
+      <created>1715366637375</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715366637375</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="gradle, docker, models, mainApp" />
+    <MESSAGE value="add controllers: (Admin, Public, User, Participant, Internship),&#10;add repositories and services,&#10;add Security basic Auth,&#10;add V1_init migration,&#10;add LoggingFilter" />
+    <MESSAGE value="." />
+    <MESSAGE value="подписание нового участника теперь автоматически добавляет нового пользователя в gitlab, добавлен метод публикации занятия" />
+    <MESSAGE value="добавлен эндпоинт публикации занятия, отправки стажировки в архив, просмотра последних коммитов" />
+    <MESSAGE value="конфигурация swagger2" />
+    <MESSAGE value="добавлены dto, добавлен эндпоинт получения ведомости и небольшой рефакторинг" />
+    <MESSAGE value="добавлены dto, добавлен эндпоинт получения ведомости, добавлены некоторые тесты и небольшой рефакторинг" />
+    <MESSAGE value="небольшие исправления и немного асинхронности" />
+    <option name="LAST_COMMIT_MESSAGE" value="небольшие исправления и немного асинхронности" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/services/TaskService.java</url>
+          <line>30</line>
+          <properties class="springboot.services.TaskService" method="saveWithLessonAndRepositoryId">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/controllers/TaskController.java</url>
+          <line>31</line>
+          <properties class="springboot.controllers.TaskController" method="addTask">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/services/ParticipantService.java</url>
+          <line>37</line>
+          <properties class="springboot.services.ParticipantService" method="signUpParticipantForInternship">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/controllers/AdminController.java</url>
+          <line>68</line>
+          <properties class="springboot.controllers.AdminController" method="signUpForInternship">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/services/GitlabService.java</url>
+          <line>154</line>
+          <properties class="springboot.services.GitlabService" method="getLastForkCommit">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/controllers/AdminController.java</url>
+          <line>135</line>
+          <properties class="springboot.controllers.AdminController" method="getStatement">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/services/PerformanceService.java</url>
+          <line>55</line>
+          <properties class="springboot.services.PerformanceService" method="getStatement">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/springboot/controllers/UserController.java</url>
+          <line>31</line>
+          <properties class="springboot.controllers.UserController" method="checkPerformance">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="springboot.entities.TaskEntity" memberName="lesson" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
